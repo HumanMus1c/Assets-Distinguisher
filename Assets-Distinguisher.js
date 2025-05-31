@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name         Assets-Distinguisher
+// @name:en         Assets-Distinguisher
 // @namespace    https://github.com
 // @version      1.0
-// @description  为GitHub Release Assets添加隔行变色效果 | Add alternating row colors to GitHub Release Assets
+// @description  为GitHub Release Assets添加隔行变色效果。
+// @description:en  Add alternating row colors to GitHub Release Assets.
 // @author       https://github.com/HumanMus1c
 // @match        https://github.com/*/releases*
 // @grant        GM_addStyle
