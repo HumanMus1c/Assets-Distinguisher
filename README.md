@@ -4,10 +4,12 @@
 
 这是一个简单而实用的浏览器脚本，通过为 GitHub Release 页面的每个 Asset 添加交替的背景色，使下载列表更加清晰易读，减少视觉疲劳，防止下载错误文件。
 
+![示例图片](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTc4Nzk3LCJwdXIiOiJibG9iX2lkIn19--d9ad7c107afa00105dfc9a5a086c10d8cf2cc6ea/Honeycam%202025-05-31%2019-54-55.gif)
+
 ## ✨ 主要功能
 
 - [x] 为 Release Assets 列表添加交替的背景色
-- [x]提高资源条目的可读性和可区分性
+- [x] 提高资源条目的可读性和可区分性
 - [x] 防止因视觉模糊导致的文件下载错误
 - [ ] 自动适配 GitHub 的深色/浅色主题
 
@@ -25,8 +27,9 @@
 
 安装完成后，脚本会自动在 GitHub Release 页面生效：
 1. 访问任意 GitHub 仓库的 Release 页面
-2. Assets 列表将自动应用交替背景色
-3. 无需任何额外设置，即可享受更清晰的下载体验
+2. 点击油猴图标
+3. 找到脚本菜单
+4. 点击 `Assets-Distinguisher` 
 
 ## 🎯 使用场景
 
