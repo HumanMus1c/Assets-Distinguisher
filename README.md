@@ -29,7 +29,7 @@
 1. 访问任意 GitHub 仓库的 Release 页面
 2. 点击油猴图标
 3. 找到脚本菜单
-4. 点击 `Assets-Distinguisher` 
+4. 设置自定义颜色
 
 ## 🎯 使用场景
 

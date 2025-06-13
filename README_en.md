@@ -29,7 +29,7 @@ After installation, the script will automatically take effect on GitHub Release 
 1. Visit the Release page of any GitHub repository
 2. Click the Tampermonkey/Greasemonkey icon
 3. Find the script menu
-4. Click `Assets-Distinguisher`
+4. Set custom colors you like.
 
 ## 🎯 Use Cases
 
