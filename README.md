@@ -1,4 +1,4 @@
- # Assets-Distinguisher
+ # Make-GitHub-Great-Again!
 
 🎨 让 GitHub Release 页面的资源列表更加美观易读！
 
@@ -22,7 +22,7 @@
    - Edge: [Tampermonkey](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd)
 
 2. 点击下面的链接安装脚本：
-   [安装 Assets-Distinguisher](https://raw.githubusercontent.com/HumanMus1c/Assets-Distinguisher/main/Assets-Distinguisher.js)
+   [安装 Make-GitHub-Great-Again!](https://update.greasyfork.org/scripts/537852/Make-GitHub-Great-Again%21.user.js)
 
 ## 💡 使用方法
 

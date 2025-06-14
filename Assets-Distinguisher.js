@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name                     Assets-Distinguisher
-// @name:en                Assets-Distinguisher
+// @name                     Make-GitHub-Great-Again!
+// @name:en                Make-GitHub-Great-Again!
 // @namespace            https://github.com
-// @version                  3.0
-// @description           为GitHub Release Assets添加隔行变色效果。
-// @description:en       Add alternating row colors to GitHub Release Assets.
+// @version                  3.0.1
+// @description           为 Release Assets 每条条目添加交替的背景色
+// @description:en       Add alternating background colors to each item in the Release Assets list
 // @author                  https://github.com/HumanMus1c
 // @match                   https://github.com/*/releases*
 // @grant                    GM_addStyle

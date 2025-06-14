@@ -1,4 +1,4 @@
-# Assets-Distinguisher
+# Make-GitHub-Great-Again!
 
 🎨 Make the GitHub Release assets list more beautiful and readable!
 
@@ -22,7 +22,7 @@ This is a simple and practical browser script that adds alternating background c
    - Edge: [Tampermonkey](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd)
 
 2. Click the link below to install the script:
-   [Install Assets-Distinguisher](https://raw.githubusercontent.com/HumanMus1c/Assets-Distinguisher/main/Assets-Distinguisher.js)
+   [Install Make-GitHub-Great-Again!](https://update.greasyfork.org/scripts/537852/Make-GitHub-Great-Again%21.user.js)
 
 ## 💡 Usage
 
