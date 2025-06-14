@@ -8,10 +8,11 @@ This is a simple and practical browser script that adds alternating background c
 
 ## ✨ Main Features
 
-- [x] Add alternating background colors to the Release Assets list
-- [x] Improve readability and distinguishability of asset entries
-- [x] Prevent file download errors caused by visual confusion
-- [ ] Automatically adapt to GitHub's dark/light themes
+[✅]Add alternating background colors to the Release Assets list
+[✅]Improve readability and distinguishability of asset entries
+[✅]Prevent file download errors caused by visual confusion
+[✅] Adapt to GitHub's dark/light theme
+[✅] Supports setting colors for both dark and light themes, with independent colors for each theme.
 
 ## 🚀 Installation
 
