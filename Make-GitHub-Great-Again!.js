@@ -2,7 +2,7 @@
 // @name                     Make-GitHub-Great-Again!
 // @name:en                Make-GitHub-Great-Again!
 // @namespace            https://github.com
-// @version                  3.0.1
+// @version                  3.1
 // @description           为 Release Assets 每条条目添加交替的背景色
 // @description:en       Add alternating background colors to each item in the Release Assets list
 // @author                  https://github.com/HumanMus1c
@@ -52,39 +52,105 @@
         return getCurrentTheme() === 'dark' ? defaultColorsDark : defaultColorsLight;
     }
 
-    // 存储结构重构：为每个主题保存自定义颜色
-    const theme = getCurrentTheme();
+    // 创建样式元素并添加到文档头部
+    const styleElement = document.createElement('style');
+    styleElement.id = 'Make-GitHub-Great-Again-style';
+    document.head.appendChild(styleElement);
 
-    // 获取当前主题的自定义颜色（如果存在）
-    const customColors = {
-        light: GM_getValue("customColorsLight", null),
-        dark: GM_getValue("customColorsDark", null)
-    };
+    // 应用颜色的函数 - 根据当前主题动态更新样式
+    function applyColors() {
+        const theme = getCurrentTheme();
+        const themeKey = `customColors${theme.charAt(0).toUpperCase() + theme.slice(1)}`;
+        const customColors = GM_getValue(themeKey, null);
+        const colors = customColors || getDefaultColors();
 
-    // 当前使用的颜色
-    let colors;
+        // 动态更新样式
+        styleElement.textContent = `
+            .Box.Box--condensed.mt-3 li.Box-row:nth-child(odd) {
+                background-color: ${colors.oddRowColor} !important;
+            }
+            .Box.Box--condensed.mt-3 li.Box-row:nth-child(even) {
+                background-color: ${colors.evenRowColor} !important;
+            }
+            .Box.Box--condensed.mt-3 li.Box-row:hover {
+                background-color: ${colors.hoverColor} !important;
+            }
+        `;
 
-    // 如果当前主题有自定义颜色，使用自定义颜色
-    if (customColors[theme]) {
-        colors = customColors[theme];
+        // 如果对话框是打开的，更新对话框中的颜色
+        const dialog = document.querySelector('.color-picker-dialog.visible');
+        if (dialog) {
+            updateDialogColors();
+        }
     }
-    // 否则使用当前主题的默认颜色
-    else {
-        colors = getDefaultColors();
+
+    // 更新对话框中的颜色显示
+    function updateDialogColors() {
+        const dialog = document.querySelector('.color-picker-dialog');
+        if (!dialog) return;
+
+        const currentTheme = getCurrentTheme();
+        const themeKey = `customColors${currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)}`;
+        const customColors = GM_getValue(themeKey, null);
+        const colors = customColors || (currentTheme === 'dark' ? defaultColorsDark : defaultColorsLight);
+
+        // 更新标题
+        const title = dialog.querySelector('.color-picker-title');
+        if (title) {
+            title.textContent = `颜色选择器 (${currentTheme === 'dark' ? '暗色主题' : '亮色主题'})`;
+        }
+
+        // 更新颜色按钮
+        const oddRowColorBtn = dialog.querySelector('#oddRowColorBtn');
+        const evenRowColorBtn = dialog.querySelector('#evenRowColorBtn');
+        const hoverColorBtn = dialog.querySelector('#hoverColorBtn');
+
+        if (oddRowColorBtn) oddRowColorBtn.style.backgroundColor = colors.oddRowColor;
+        if (evenRowColorBtn) evenRowColorBtn.style.backgroundColor = colors.evenRowColor;
+        if (hoverColorBtn) hoverColorBtn.style.backgroundColor = colors.hoverColor;
+
+        // 更新颜色选择器值
+        const oddRowColorPicker = dialog.querySelector('#oddRowColorPicker');
+        const evenRowColorPicker = dialog.querySelector('#evenRowColorPicker');
+        const hoverColorPicker = dialog.querySelector('#hoverColorPicker');
+
+        if (oddRowColorPicker) oddRowColorPicker.value = colors.oddRowColor;
+        if (evenRowColorPicker) evenRowColorPicker.value = colors.evenRowColor;
+        if (hoverColorPicker) hoverColorPicker.value = colors.hoverColor;
     }
 
-    // 添加CSS样式 - 修复主题跟随问题
+    // 初始应用颜色
+    applyColors();
+
+    // 监听主题变化并动态更新样式
+    function setupThemeObserver() {
+        // 监听HTML元素的属性变化
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.attributeName === 'data-color-mode' ||
+                    mutation.attributeName === 'class') {
+                    applyColors();
+                    break;
+                }
+            }
+        });
+
+        // 监听系统主题变化
+        const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        systemThemeMedia.addEventListener('change', applyColors);
+
+        // 开始观察文档元素
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-color-mode', 'class']
+        });
+    }
+
+    // 设置主题观察器
+    setupThemeObserver();
+
+    // 添加CSS样式 - 对话框样式（固定不变）
     GM_addStyle(`
-        .Box.Box--condensed.mt-3 li.Box-row:nth-child(odd) {
-            background-color: ${colors.oddRowColor} !important;
-        }
-        .Box.Box--condensed.mt-3 li.Box-row:nth-child(even) {
-            background-color: ${colors.evenRowColor} !important;
-        }
-        .Box.Box--condensed.mt-3 li.Box-row:hover {
-            background-color: ${colors.hoverColor} !important;
-        }
-
         /* 对话框样式 - 修复主题跟随问题 */
         .color-picker-dialog {
             position: fixed;
@@ -309,9 +375,10 @@
 
     // 创建颜色选择器对话框
     function createColorPickerDialog() {
-        // 如果对话框已存在，则显示它
+        // 如果对话框已存在，则显示它并更新颜色
         let dialog = document.querySelector('.color-picker-dialog');
         if (dialog) {
+            updateDialogColors();
             openDialog(dialog);
             return;
         }
@@ -375,7 +442,7 @@
         const closeBtn = dialog.querySelector('.color-picker-close');
         const cancelBtn = dialog.querySelector('.cancel-button');
         const confirmBtn = dialog.querySelector('.confirm-button');
-        const resetBtn = dialog.querySelector('.reset-button'); // 新增的重置按钮
+        const resetBtn = dialog.querySelector('.reset-button');
 
         const oddRowColorBtn = dialog.querySelector('#oddRowColorBtn');
         const evenRowColorBtn = dialog.querySelector('#evenRowColorBtn');
@@ -384,11 +451,6 @@
         const oddRowColorPicker = dialog.querySelector('#oddRowColorPicker');
         const evenRowColorPicker = dialog.querySelector('#evenRowColorPicker');
         const hoverColorPicker = dialog.querySelector('#hoverColorPicker');
-
-        // 初始化颜色变量
-        let newOddColor = customColors.oddRowColor;
-        let newEvenColor = customColors.evenRowColor;
-        let newHoverColor = customColors.hoverColor;
 
         // 设置颜色按钮点击事件 - 打开颜色选择器
         [oddRowColorBtn, evenRowColorBtn, hoverColorBtn].forEach(btn => {
@@ -403,20 +465,17 @@
             });
         });
 
-        // 颜色选择器变化事件
+        // 颜色选择器变化事件 - 只更新按钮颜色
         oddRowColorPicker.addEventListener('input', (e) => {
-            newOddColor = e.target.value;
-            oddRowColorBtn.style.backgroundColor = newOddColor;
+            oddRowColorBtn.style.backgroundColor = e.target.value;
         });
 
         evenRowColorPicker.addEventListener('input', (e) => {
-            newEvenColor = e.target.value;
-            evenRowColorBtn.style.backgroundColor = newEvenColor;
+            evenRowColorBtn.style.backgroundColor = e.target.value;
         });
 
         hoverColorPicker.addEventListener('input', (e) => {
-            newHoverColor = e.target.value;
-            hoverColorBtn.style.backgroundColor = newHoverColor;
+            hoverColorBtn.style.backgroundColor = e.target.value;
         });
 
         // 关闭按钮功能 - 应用滑出动画
@@ -431,20 +490,28 @@
 
         // 新增的重置按钮功能
         resetBtn.addEventListener('click', () => {
-            const currentTheme = getCurrentTheme();
+            const resetTheme = getCurrentTheme(); // 动态获取当前主题
 
-            if (confirm(`确定要重置${currentTheme === 'dark' ? '暗色' : '亮色'}主题的自定义颜色吗？`)) {
+            if (confirm(`确定要重置${resetTheme === 'dark' ? '暗色' : '亮色'}主题的自定义颜色吗？`)) {
                 // 删除当前主题的自定义颜色设置
-                GM_setValue(`customColors${currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)}`, null);
+                GM_setValue(`customColors${resetTheme.charAt(0).toUpperCase() + resetTheme.slice(1)}`, null);
 
-                // 关闭对话框并刷新页面
+                // 关闭对话框并更新颜色
                 closeDialog(dialog);
-                setTimeout(() => location.reload(), 100); // 延迟确保对话框关闭动画完成
+                applyColors();
             }
         });
 
-        // 确认按钮功能
+        // 确认按钮功能 - 修复：只保存到当前主题
         confirmBtn.addEventListener('click', () => {
+            // 动态获取当前主题
+            const saveTheme = getCurrentTheme();
+
+            // 从颜色选择器获取值
+            const newOddColor = oddRowColorPicker.value;
+            const newEvenColor = evenRowColorPicker.value;
+            const newHoverColor = hoverColorPicker.value;
+
             // 保存为当前主题的自定义颜色
             const newCustomColors = {
                 oddRowColor: newOddColor,
@@ -453,10 +520,10 @@
             };
 
             // 保存到对应主题的存储键
-            GM_setValue(`customColors${currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)}`, newCustomColors);
+            GM_setValue(`customColors${saveTheme.charAt(0).toUpperCase() + saveTheme.slice(1)}`, newCustomColors);
 
             closeDialog(dialog);
-            location.reload();
+            applyColors(); // 动态更新颜色
         });
 
         // 添加ESC键关闭支持
@@ -521,7 +588,7 @@
 
             // 保存更新
             GM_setValue(themeKey, updatedColors);
-            location.reload();
+            applyColors(); // 动态更新颜色
         }
     });
 
@@ -541,7 +608,7 @@
 
             // 保存更新
             GM_setValue(themeKey, updatedColors);
-            location.reload();
+            applyColors(); // 动态更新颜色
         }
     });
 
@@ -561,7 +628,7 @@
 
             // 保存更新
             GM_setValue(themeKey, updatedColors);
-            location.reload();
+            applyColors(); // 动态更新颜色
         }
     });
 
@@ -572,7 +639,7 @@
         if (confirm(`确定要重置${currentTheme === 'dark' ? '暗色' : '亮色'}主题的自定义颜色吗？`)) {
             // 删除当前主题的自定义颜色设置
             GM_setValue(`customColors${currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)}`, null);
-            location.reload();
+            applyColors(); // 动态更新颜色
         }
     });
 })();

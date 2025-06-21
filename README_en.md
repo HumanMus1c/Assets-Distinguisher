@@ -12,6 +12,7 @@ This is a simple and practical browser script that adds alternating background c
 - [✅]Improve readability and distinguishability of asset entries
 - [✅]Prevent file download errors caused by visual confusion
 - [✅] Adapt to GitHub's dark/light theme
+- [✅] Automatically switches to the customized colors. The two sets of colors are independent and does'nt affect each other.
 - [✅] Supports setting colors for both dark and light themes, with independent colors for each theme.
 
 ## 🚀 Installation
