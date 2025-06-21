@@ -4,7 +4,7 @@
 
 这是一个简单而实用的浏览器脚本，通过为 GitHub Release 页面的每个 Asset 添加交替的背景色，使下载列表更加清晰易读，减少视觉疲劳，防止下载错误文件。
 
-![示例图片](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTc4Nzk3LCJwdXIiOiJibG9iX2lkIn19--d9ad7c107afa00105dfc9a5a086c10d8cf2cc6ea/Honeycam%202025-05-31%2019-54-55.gif)
+![示例图片](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTgwOTA1LCJwdXIiOiJibG9iX2lkIn19--9a092f076ab9e141a88a4c0ec21746599ddae538/Honeycam%202025-06-21%2017-04-44.gif)
 
 ## ✨ 主要功能
 

@@ -4,7 +4,7 @@
 
 This is a simple and practical browser script that adds alternating background colors to each asset on the GitHub Release page, making the download list clearer and easier to read, reducing visual fatigue, and preventing downloading the wrong file.
 
-![Example Image](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTc4Nzk3LCJwdXIiOiJibG9iX2lkIn19--d9ad7c107afa00105dfc9a5a086c10d8cf2cc6ea/Honeycam%202025-05-31%2019-54-55.gif)
+![Example Image](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTgwOTA1LCJwdXIiOiJibG9iX2lkIn19--9a092f076ab9e141a88a4c0ec21746599ddae538/Honeycam%202025-06-21%2017-04-44.gif)
 
 ## ✨ Main Features
 
